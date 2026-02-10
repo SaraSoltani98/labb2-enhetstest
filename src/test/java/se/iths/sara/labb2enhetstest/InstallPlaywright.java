@@ -1,3 +1,5 @@
+package se.iths.sara.labb2enhetstest;
+
 import com.microsoft.playwright.Playwright;
 
 

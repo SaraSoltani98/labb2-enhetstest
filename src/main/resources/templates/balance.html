@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Här visar saldon på kontot</title>
 </head>
 <body>
-$END$
+<h1>Aktuell saldo på konto</h1>
+<p id="balance" th:text="${balance}"></p>
 </body>
 </html>
+
+
+
+
+
+
