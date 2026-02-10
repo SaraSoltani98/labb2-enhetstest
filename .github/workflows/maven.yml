@@ -2,7 +2,7 @@ name: Java CI
 
 on:
   push:
-    branches: [ "main","master" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build:
@@ -16,32 +16,14 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-          cache: maven
 
-      # 1) Kör unit-tester (utan e2e)
-      - name: Run unit tests
-        run: mvn -B test -DexcludedGroups=e2e
+      - name: Build project
+        run: mvn -B package -DskipTests
 
-      # 2) Installera Playwright browsers
-      - name: Install Playwright
-        run: mvn -q -DskipTests exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
-
-      # 3) Starta Spring Boot
       - name: Start Spring Boot
-        run: mvn -q -DskipTests spring-boot:run &
-
-      # 4) Vänta på att appen startar
-      - name: Wait for app
         run: |
-          for i in {1..30}; do
-            if curl -s http://localhost:8080/balance; then
-              echo "App ready"
-              exit 0
-            fi
-            sleep 2
-          done
-          exit 1
+          nohup mvn -B spring-boot:run &
+          sleep 20
 
-      # 5) Kör e2e-tester
-      - name: Run e2e tests
-        run: mvn -B test -Dgroups=e2e
+      - name: Run tests
+        run: mvn -B test
