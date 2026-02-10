@@ -18,4 +18,7 @@ jobs:
           java-version: '17'
 
       - name: Run tests
-        run: mvn -B test
+        run: mvn -B test  -DexcludedGroups=e2e
+
+
+
